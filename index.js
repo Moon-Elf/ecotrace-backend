@@ -5,10 +5,13 @@ import harvest from "./routes/harvest.js";
 import manufacturing from "./routes/manufacturing.js";
 import Consumer from "./routes/Consumer.js";
 import Transport from "./routes/transportation.js";
+import cors from 'cors';
 
 const app = express();
 dotenv.config();
-
+app.use(cors({
+  origin: 'http://localhost:5173' 
+}));
 const connect = async () => {
   try {
     await mongoose.connect(process.env.MongoDB);
