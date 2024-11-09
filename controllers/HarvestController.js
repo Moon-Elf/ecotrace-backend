@@ -7,7 +7,7 @@ export const HarvestIniate = async (req, res) => {
 
     // send bloackchain for saving this data
     // then return new response
-    res.status(201).json(saved);
+    res.status(201).json(newHarvest);
   } catch (error) {
     console.log(error);
   }

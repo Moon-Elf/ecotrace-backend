@@ -2,12 +2,12 @@ import ManufacturingProcess from "../models/ManufacturingProcess.js";
 
 export const createManufacturingDetails = async (req, res) => {
   try {
-    const newHarvest = new harvest(req.body);
+    const newHarvest = new ManufacturingProcess(req.body);
     const saved = newHarvest.save();
 
     // send bloackchain for saving this data
     // then return new response
-    res.status(201).json(saved);
+    res.status(201).json(newHarvest);
   } catch (error) {
     console.log(error);
   }
