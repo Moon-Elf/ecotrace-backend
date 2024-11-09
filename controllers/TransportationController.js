@@ -1,6 +1,7 @@
+import TransportationModel from "../models/TransportationModel.js";
 export const updateTransportation = async (req, res) => {
   try {
-    const param = req.query.param;
+    const param = req.params.id;
     const { location, metrics } = req.body;
     const locationUpdate = {
       timestamp: new Date(),
