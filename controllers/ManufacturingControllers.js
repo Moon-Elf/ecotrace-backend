@@ -14,9 +14,10 @@ export const createManufacturingDetails = async (req, res) => {
 };
 export const updateManufacturingDetails = async (req, res) => {
   try {
-    const param = await req.query.param;
+    const param = await req.params.id;
     const { stepDetails } = req.body;
-
+    
+    
     const updatedDoc = await ManufacturingProcess.findByIdAndUpdate(
       param,
       {
