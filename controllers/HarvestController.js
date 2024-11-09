@@ -1,5 +1,5 @@
 // model import
-import harvest from "../models/HarvestModel";
+import harvest from "../models/HarvestModel.js";
 export const HarvestIniate = async (req, res) => {
   try {
     const newHarvest = new harvest(req.body);

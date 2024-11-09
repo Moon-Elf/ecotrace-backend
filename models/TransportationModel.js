@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const TransportSchema = new Schema(
@@ -61,4 +61,4 @@ const TransportSchema = new Schema(
   }
 );
 
-module.exports = mongoose.model("Transport", TransportSchema);
+export default mongoose.model("TransportationModel", TransportSchema);

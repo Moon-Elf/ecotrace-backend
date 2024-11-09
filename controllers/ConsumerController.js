@@ -1,5 +1,5 @@
-import ManufacturingProcess from "../models/ManufacturingProcess";
-import TransportationModel from "../models/TransportationModel";
+import ManufacturingProcess from "../models/ManufacturingProcess.js";
+import TransportationModel from "../models/TransportationModel.js";
 
 export const ConsumerCalculation = async (req, res) => {
   try {

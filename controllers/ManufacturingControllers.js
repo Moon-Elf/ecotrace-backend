@@ -1,4 +1,4 @@
-import ManufacturingProcess from "../models/ManufacturingProcess";
+import ManufacturingProcess from "../models/ManufacturingProcess.js";
 
 export const createManufacturingDetails = async (req, res) => {
   try {

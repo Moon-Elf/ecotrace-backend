@@ -1,10 +1,10 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import harvest from "./routes/harvest";
-import manufacturing from "./routes/manufacturing";
-import Consumer from "./routes/Consumer";
-import Transport from "./routes/transportation";
+import harvest from "./routes/harvest.js";
+import manufacturing from "./routes/manufacturing.js";
+import Consumer from "./routes/Consumer.js";
+import Transport from "./routes/transportation.js";
 
 const app = express();
 dotenv.config();
