@@ -39,6 +39,20 @@ app.use(express.json());
 //   });
 // });
 
+// POST /api/harvest/initiate
+// {
+//   "forestId": "MMR-TEAK-001",
+//   "woodType": "TEAK_WOOD",
+//   "quantity": 0.8,
+//   "location": {
+//     "latitude": 16.8661,
+//     "longitude": 96.1951
+//   },
+//   "certificationId": "FSC-2024-456"
+// }
+
+app.use("/api/harvest/initiate", )
+
 app.listen(8000, () => {
   connect();
   console.log("Connected to backend.");
