@@ -5,42 +5,42 @@ const ManufacturingProcessSchema = new Schema(
   {
     materialId: {
       type: String,
-      required: true,
+      // required: true,
       trim: true,
     },
     facilityId: {
       type: String,
-      required: true,
+      // required: true,
       trim: true,
     },
     productType: {
       type: String,
-      required: true,
+      // required: true,
       trim: true,
     },
     processDetails: {
       plannedStartDate: {
         type: Date,
-        required: true,
+        // required: true,
       },
       estimatedDuration: {
         type: String,
-        required: true,
+        // required: true,
       },
       manufacturingSteps: [
         {
           stepId: {
             type: Number,
-            required: true,
+            // required: true,
           },
           name: {
             type: String,
-            required: true,
+            // required: true,
             trim: true,
           },
           estimatedDuration: {
             type: String,
-            required: true,
+            // required: true,
           },
           toolsRequired: [
             {
@@ -53,15 +53,15 @@ const ManufacturingProcessSchema = new Schema(
       environmentalMetrics: {
         estimatedEnergyUsage: {
           type: String,
-          required: true,
+          // required: true,
         },
         estimatedWaterUsage: {
           type: String,
-          required: true,
+          // required: true,
         },
         estimatedWaste: {
           type: String,
-          required: true,
+          // required: true,
         },
       },
       qualityChecks: [

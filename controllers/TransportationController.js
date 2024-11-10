@@ -6,7 +6,7 @@ export const createTransportation = async (req, res) => {
     await newTransport.save();
     return res.status(201).send(newTransport);
   } catch (error) {
-    res.status(500).second(error);
+    res.status(500).send(error);
   }
 };
 export const updateTransportation = async (req, res) => {

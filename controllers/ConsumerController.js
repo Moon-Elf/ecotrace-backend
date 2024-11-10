@@ -3,11 +3,12 @@ import TransportationModel from "../models/TransportationModel.js";
 
 export const ConsumerCalculation = async (req, res) => {
   try {
-    const transportationDoc =
-      (await TransportationModel.findById(req.params.id)) || "";
-    const manufacturingDoc =
-      (await ManufacturingProcess.findById(req.params.id)) || "";
+    console.log("hello");
+    // Retrieve documents, expecting single records
+    const transportationDoc = await TransportationModel.findOne({ productId: req.params.id });
+    const manufacturingDoc = await ManufacturingProcess.findOne({ materialId: req.params.id });
 
+    // Check if neither document exists
     if (!transportationDoc && !manufacturingDoc) {
       return res.status(404).json({
         success: false,
@@ -15,29 +16,18 @@ export const ConsumerCalculation = async (req, res) => {
       });
     }
 
-    // Calculate manufacturing emissions
+    // Calculate manufacturing emissions if manufacturingDoc is found
     let manufacturingEmissions = 0;
     if (manufacturingDoc) {
-      // Convert energy usage from string to number (assuming kWh)
-      const energyUsage = parseFloat(
-        manufacturingDoc.processDetails.environmentalMetrics
-          .estimatedEnergyUsage
-      );
-      // Average carbon emission factor for industrial electricity (kg CO2/kWh)
+      const processDetails = manufacturingDoc.processDetails;
+      const metrics = processDetails?.environmentalMetrics || {};
+
+      const energyUsage = parseFloat(metrics.estimatedEnergyUsage || 0);
+      const waterUsage = parseFloat(metrics.estimatedWaterUsage || 0);
+      const waste = parseFloat(metrics.estimatedWaste || 0);
+
       const energyEmissionFactor = 0.5;
-
-      // Convert water usage from string to number (assuming liters)
-      const waterUsage = parseFloat(
-        manufacturingDoc.processDetails.environmentalMetrics.estimatedWaterUsage
-      );
-      // Water treatment emission factor (kg CO2/liter)
       const waterEmissionFactor = 0.000298;
-
-      // Convert waste from string to number (assuming kg)
-      const waste = parseFloat(
-        manufacturingDoc.processDetails.environmentalMetrics.estimatedWaste
-      );
-      // Wood waste emission factor (kg CO2/kg waste)
       const wasteEmissionFactor = 0.01;
 
       manufacturingEmissions =
@@ -46,25 +36,25 @@ export const ConsumerCalculation = async (req, res) => {
         waste * wasteEmissionFactor;
     }
 
-    // Calculate transportation emissions
+    // Calculate transportation emissions if transportationDoc is found
     let transportationEmissions = 0;
     if (transportationDoc) {
-      // Average emission factor for freight transport (kg CO2/km/L)
+      const metrics = transportationDoc.metrics || {};
+      const fuelConsumption = metrics.fuelConsumption || 0;
+      const distance = metrics.distance || 0;
+
       const transportEmissionFactor = 2.62;
-      transportationEmissions =
-        transportationDoc.metrics.fuelConsumption *
-        transportEmissionFactor *
-        transportationDoc.metrics.distance;
+      transportationEmissions = fuelConsumption * transportEmissionFactor * distance;
     }
 
-    // Calculate total carbon footprint
-    const totalCarbonFootprint =
-      manufacturingEmissions + transportationEmissions;
+    // Total carbon footprint calculation
+    const totalCarbonFootprint = manufacturingEmissions + transportationEmissions;
 
+    // Send response
     return res.status(200).json({
       success: true,
       data: {
-        totalCarbonFootprint: totalCarbonFootprint.toFixed(2), // kg CO2
+        totalCarbonFootprint: totalCarbonFootprint.toFixed(2),
         breakdown: {
           manufacturing: manufacturingEmissions.toFixed(2),
           transportation: transportationEmissions.toFixed(2),
@@ -77,6 +67,7 @@ export const ConsumerCalculation = async (req, res) => {
       },
     });
   } catch (error) {
+    console.error("Error in ConsumerCalculation:", error.message); // Log error for debugging
     return res.status(500).json({
       success: false,
       message: "Error calculating carbon footprint",
